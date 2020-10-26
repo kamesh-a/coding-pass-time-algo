@@ -16,6 +16,10 @@ class DoublyLinkedList {
     this.length = null;
   }
 
+  isEmpty() {
+    return this.head == null && this.tail == null;
+  }
+
   add(e) {
     if (e) {
       const node = new Node(e);
@@ -83,10 +87,18 @@ class DoublyLinkedList {
     if (this.tail) {
       const prev = this.tail.prev;
       const removedNode = this.tail;
+
+      if (this.tail === this.head) {
+        this.head = prev;
+      }
+
       this.tail = prev;
+
       if (prev) {
         prev.next = null;
       }
+
+      this.length--;
       return removedNode;
     }
   }
@@ -95,10 +107,17 @@ class DoublyLinkedList {
     if (this.head) {
       const next = this.head.next;
       const removedNode = this.head;
+      if (this.head === this.tail) {
+        this.tail = next;
+      }
+
       this.head = next;
+
       if (next) {
         next.prev = null;
       }
+
+      this.length--;
       return removedNode;
     }
   }

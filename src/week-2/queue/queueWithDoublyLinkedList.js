@@ -24,6 +24,10 @@ class QueueWithDoublyLinkedList {
     this.add.apply(this, arguments);
   }
 
+  isEmpty() {
+    return this.linkedList.isEmpty();
+  }
+
   dequeue() {
     this.remove.apply(this, arguments);
   }
@@ -38,24 +42,59 @@ class QueueWithDoublyLinkedList {
     this.linkedList.addFirst(e);
   }
 
+  peek() {
+    const node = this.linkedList.head;
+    return node ? node.value : null;
+  }
+
+  getFirst() {
+    return this.peek.call(this);
+  }
+
+  getLast() {
+    const node = this.linkedList.tail;
+    return node ? node.value : null;
+  }
+
   remove() {
     // Removes element from it's head
-    this.linkedList.remove();
+    return this.linkedList.remove();
   }
 
   removeLast() {
     // Removes element from it's tail
-    this.linkedList.removeLast();
+    return this.linkedList.removeLast();
   }
 
   removeOccurence(e) {
     // Removes first occurence element by traversing head -> tail
-    this.linkedList.remove(e);
+    return this.linkedList.remove(e);
   }
 
   removeLastOccurence(e) {
     // Removes last occurence element by traversing tail -> head
     this.linkedList.removeLast(e);
+  }
+
+  [Symbol.iterator]() {
+    let node = this.linkedList.head;
+
+    return {
+      next() {
+        // next function.
+        if (node) {
+          const value = node.value;
+          const done = node.value ? false : true;
+          node = node.next;
+          return { value, done };
+        }
+        return { value: null, done: true };
+      },
+    };
+  }
+
+  print() {
+    this.linkedList.print();
   }
 
   size() {

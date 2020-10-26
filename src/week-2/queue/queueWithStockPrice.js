@@ -16,6 +16,10 @@
  *  but we need 3,4,5 including 5th day so
  *  currentDay - windowDays + 1
  *  5 - 3 + 1 = 3 last possible day which we can have in queue anything below that should be deleted.
+ *
+ * Time complexity:
+ * add : O(1) amortizied, O(n)
+ * max : O(n) we are looping entire window in queue
  */
 
 const { QueueBySLL } = require("./queueWithSinglyLinkedList");
