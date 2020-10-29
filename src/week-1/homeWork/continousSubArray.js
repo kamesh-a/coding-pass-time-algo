@@ -38,7 +38,7 @@ export default function continousSubArray(inputArr) {
     let previous = inputArr[index - 1];
     if (current < previous) {
       // dip found during iteration.
-      let startPointer = index;
+      startPointer = index;
       break;
     }
   }
