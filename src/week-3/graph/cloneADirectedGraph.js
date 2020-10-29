@@ -2,7 +2,8 @@
  * Cloning a Directed Graph with DFS.
  */
 
-const { Graph, Node, STATE_ENUM } = require("./graphAdjacentcyList");
+const { Node, STATE_ENUM } = require("./graphAdjacentcyList");
+const { printGraph } = require("./recurseAndPrintGraphs");
 
 function cloneGraph(rooNode) {
   if (rooNode) {
@@ -67,29 +68,4 @@ levelThreeChildOne.addNeighbors(root);
  */
 
 const copiedNode = cloneGraph(root);
-
-function printGraph(rootNode) {
-  if (rootNode) {
-    const level = 0;
-    console.log(`---------------------------------`);
-    printRecurse(rootNode, level);
-  }
-}
-
-function printRecurse(rootNode, level) {
-  console.log(`level-${level} : ${rootNode.data}`);
-  while (
-    rootNode.getNeighbors().length &&
-    rootNode.getState() !== STATE_ENUM.VISTED
-  ) {
-    rootNode.setState(STATE_ENUM.VISTED);
-
-    level++;
-
-    for (const node of rootNode.getNeighbors()) {
-      printRecurse(node, level);
-    }
-  }
-}
-
 printGraph(copiedNode);

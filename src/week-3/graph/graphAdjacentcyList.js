@@ -15,6 +15,10 @@ class Graph {
     this.nodes = [];
   }
 
+  addNodes(node) {
+    this.nodes.push(node);
+  }
+
   getNodes() {
     return this.nodes;
   }
