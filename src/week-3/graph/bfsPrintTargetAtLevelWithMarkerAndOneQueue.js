@@ -1,48 +1,50 @@
 /**
  * BFS
- *  - checks it level one by one
- *  - meaning lvl1, lvl2, lvl3
- *  - When BFS is needed queue should be used.
  *
- *  Result: https://share.anysnap.app/fBreNcUal2jx
+ * Idea: Have one queue and marker to make use of level endings.
+ *
+ *
+ * If queue is having item, and we seen mark as current node
+ * we can think the neighbor nodes are already added to the queue.
+ * Back -> [  M| 21 | 20 | M | root] -> front
  */
 
+const { STATE_ENUM, Node } = require("./graphAdjacentcyList");
 const { QueueBySLL } = require("../../week-2/queue/queueWithSinglyLinkedList");
-const { Graph, STATE_ENUM, Node } = require("./graphAdjacentcyList");
 
-function isTargetPresentInGraph(graph, target) {
-  if (graph && target) {
-    for (const node of graph.getNodes()) {
-      if (bfsFindTargetInTree(node, target)) {
-        console.log(`Node found in tree`, node);
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-function bfsFindTargetInTree(root, t) {
+function printNodeWithLevel(root) {
   if (root && root.getState() === STATE_ENUM.UNVISITED) {
+    const marker = new Node("markerNode");
     const queue = new QueueBySLL();
+
     queue.add(root);
-    root.setState(STATE_ENUM.VISITING);
+    queue.add(marker);
 
     while (!queue.isEmpty()) {
-      const node = queue.remove();
-      console.log(node.data);
-      if (node.data === t) {
-        return true;
+      const current = queue.remove();
+      current.setState(STATE_ENUM.VISITING);
+      if (current !== marker) {
+        console.log(current.data);
       }
 
-      for (const neighborNode of node.getNeighbors()) {
+      if (current === marker) {
+        if (!queue.isEmpty()) {
+          // if queue is having item, and we seen mark as current node
+          // we can think the neighbor nodes are already added to the queue.
+          // Back -> [  M| 21 | 20 | M | root] -> front
+          queue.add(marker);
+        }
+        console.log("---");
+        continue;
+      }
+
+      for (const neighborNode of current.getNeighbors()) {
         if (neighborNode.getState() === STATE_ENUM.UNVISITED) {
           queue.add(neighborNode);
-          neighborNode.setState(STATE_ENUM.VISITING);
         }
       }
 
-      root.setState(STATE_ENUM.VISTED);
+      current.setState(STATE_ENUM.VISTED);
     }
   }
 }
@@ -74,15 +76,4 @@ levelThreeChildOne.addNeighbors(root);
  *                     |--> (41) ( level-3 ) --> (root)
  */
 
-const rootTwo = new Node(13);
-const rootTwoLevelOneChildOne = new Node(26);
-const rootTwoLevelOneChildTwo = new Node(39);
-rootTwo.addNeighbors(rootTwoLevelOneChildOne);
-rootTwo.addNeighbors(rootTwoLevelOneChildTwo);
-
-const graph = new Graph();
-graph.addNodes(root);
-graph.addNodes(rootTwo);
-
-const result = isTargetPresentInGraph(graph, 41);
-console.log(`Is target present in graph = ${result}`);
+printNodeWithLevel(root);
