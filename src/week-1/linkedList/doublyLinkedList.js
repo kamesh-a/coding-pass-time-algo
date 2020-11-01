@@ -85,8 +85,8 @@ class DoublyLinkedList {
 
   _removeTail() {
     if (this.tail) {
-      const prev = this.tail.prev;
       const removedNode = this.tail;
+      const prev = this.tail.prev;
 
       if (this.tail === this.head) {
         this.head = prev;

@@ -5,6 +5,10 @@ class SinglyLinkedList {
     this.size = 0;
   }
 
+  isEmpty() {
+    return this.head === null && this.tail === null;
+  }
+
   add(e) {
     if (e) {
       const node = new Node(e);

@@ -1,46 +1,47 @@
 /**
- * Give a graph with nodes, find the target is available in graph.
+ * BFS
+ *  - checks it level one by one
+ *  - meaning lvl1, lvl2, lvl3
+ *  - When BFS is needed queue should be used.
  *
- * graph -> Array<node>
- * node -> Array<neighbour_node>
- *
- * Time Complexity: O(V + E)
- * Space Complexity: O(V) as we are storing state data & state in node itself.
- *
- * Result: https://share.anysnap.app/fBreNcUal2jx
+ *  Result: https://share.anysnap.app/fBreNcUal2jx
  */
-const { STATE_ENUM, Graph, Node } = require("./graphAdjacentcyList");
+
+const { QueueBySLL } = require("../../week-2/queue/queueWithSinglyLinkedList");
+const { Graph, STATE_ENUM, Node } = require("./graphAdjacentcyList");
 
 function isTargetPresentInGraph(graph, target) {
   if (graph && target) {
     for (const rootNode of graph.getNodes()) {
-      if (dfsFindTarget(rootNode, target)) {
-        console.log(`Target(${target}) found in `, rootNode);
+      if (bfsFindTarget(rootNode, target)) {
+        console.log(`Target is present in node tree`, rootNode);
         return true;
       }
     }
-    return false;
   }
 }
-
-function dfsFindTarget(root, t) {
-  if (root && t && root.getState() === STATE_ENUM.UNVISITED) {
+function bfsFindTarget(root, t) {
+  if (root && root.getState() === STATE_ENUM.UNVISITED && t) {
+    const queue = new QueueBySLL();
+    queue.add(root);
     root.setState(STATE_ENUM.VISITING);
 
-    console.log(`checking level : node[${root.data}] === ${t}`);
-
-    if (root.data === t) {
-      return true;
-    }
-
-    for (const neighborNode of root.getNeighbors()) {
-      if (dfsFindTarget(neighborNode, t)) {
+    while (!queue.isEmpty()) {
+      const node = queue.remove();
+      console.log(`node[${node.data}] === ${t}`);
+      if (node.data === t) {
         return true;
+      }
+
+      for (const neighborNode of node.getNeighbors()) {
+        if (neighborNode.getState() === STATE_ENUM.UNVISITED) {
+          queue.add(neighborNode);
+          neighborNode.setState(STATE_ENUM.VISITING);
+        }
       }
     }
 
     root.setState(STATE_ENUM.VISTED);
-    return false;
   }
 }
 

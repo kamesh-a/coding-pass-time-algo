@@ -32,6 +32,10 @@ class QueueWithDoublyLinkedList {
     this.remove.apply(this, arguments);
   }
 
+  pop() {
+    this.remove.apply(this, arguments);
+  }
+
   add(e) {
     // Adds element to it's tail
     this.linkedList.add(e);

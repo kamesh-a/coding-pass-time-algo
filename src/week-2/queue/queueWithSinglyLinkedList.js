@@ -12,7 +12,15 @@ class QueueWithSinglyLinkedList {
   }
 
   dequeue() {
-    return this.sll.remove().value;
+    return this.remove.apply(this, arguments);
+  }
+
+  pop() {
+    return this.remove.apply(this, arguments);
+  }
+
+  isEmpty() {
+    return this.sll.isEmpty();
   }
 
   add() {
@@ -20,7 +28,7 @@ class QueueWithSinglyLinkedList {
   }
 
   remove() {
-    return this.dequeue.apply(this, arguments);
+    return this.sll.remove().value;
   }
 
   size() {
