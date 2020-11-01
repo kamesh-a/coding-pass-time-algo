@@ -29,6 +29,9 @@ class SinglyLinkedList {
     if (this.head) {
       const removeNode = this.head;
       this.head = this.head.next;
+      if (this.tail === removeNode) {
+        this.tail = this.head;
+      }
       this.size--;
       return removeNode;
     }
@@ -79,7 +82,7 @@ class SinglyLinkedList {
 class Node {
   constructor(v, n) {
     this.value = v;
-    this.next = n;
+    this.next = n || null;
   }
 
   getNext() {
